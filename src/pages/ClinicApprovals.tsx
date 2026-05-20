@@ -210,7 +210,7 @@ const ClinicApprovals: React.FC = () => {
           <h1 className="text-4xl font-black text-slate-900 tracking-tight leading-none bg-gradient-to-r from-slate-900 via-slate-800 to-slate-950 bg-clip-text text-transparent">
             Clinic Approvals
           </h1>
-          <div className="p-1 bg-emerald-50 text-emerald-600 rounded-xl anim-subtle-spin">
+          <div className="p-1 bg-blue-50 text-blue-600 rounded-xl anim-subtle-spin">
             <SparklesIcon className="h-6 w-6" />
           </div>
         </div>
@@ -234,7 +234,7 @@ const ClinicApprovals: React.FC = () => {
               onClick={() => setFilter(status)}
               className={`px-5 py-2.5 rounded-2xl font-black text-xs uppercase tracking-wider transition-all cursor-pointer ${
                 filter === status
-                  ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-100'
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md shadow-blue-100'
                   : 'bg-slate-50 text-slate-500 hover:bg-slate-100 border border-slate-100/50'
               }`}
             >
@@ -250,7 +250,7 @@ const ClinicApprovals: React.FC = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name, website..."
-            className="w-full pl-11 pr-4 py-2.5 bg-slate-50/50 focus:bg-white border-2 border-slate-100 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-50 transition-all outline-none rounded-2xl text-sm font-semibold text-slate-700 placeholder-slate-400"
+            className="w-full pl-11 pr-4 py-2.5 bg-slate-50/50 focus:bg-white border-2 border-slate-100 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none rounded-2xl text-sm font-semibold text-slate-700 placeholder-slate-400"
           />
         </div>
       </div>

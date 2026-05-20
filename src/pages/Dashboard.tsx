@@ -145,7 +145,7 @@ const Dashboard: React.FC = () => {
     return (
       <div className="flex flex-col items-center justify-center h-96 space-y-4 animate-fadeIn">
         <div className="relative">
-          <div className="w-12 h-12 border-4 border-emerald-100 border-t-emerald-500 rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin"></div>
         </div>
         <p className="text-slate-400 text-xs font-semibold tracking-wide animate-pulse">Loading dashboard environment...</p>
       </div>
@@ -197,7 +197,7 @@ const Dashboard: React.FC = () => {
       `}} />
 
       {/* Header Banner - Sleek Center Gradient Overlay */}
-      <div className="bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-500 rounded-[2.5rem] p-10 text-white shadow-xl shadow-emerald-100/50 relative overflow-hidden anim-bg-shift">
+      <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 rounded-[2.5rem] p-10 text-white shadow-xl shadow-blue-100/50 relative overflow-hidden anim-bg-shift">
         <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1.2px,transparent_1.2px)] [background-size:20px_20px]" />
         
         {/* Floating background shapes */}
@@ -209,7 +209,7 @@ const Dashboard: React.FC = () => {
             Welcome Back{user?.fullName ? `, ${user.fullName.split(' ')[0]}` : ''}!
             <HandRaisedIcon className="h-10 w-10 text-yellow-300 anim-wave shrink-0" />
           </h1>
-          <p className="text-emerald-100 text-base sm:text-lg font-semibold max-w-xl">
+          <p className="text-blue-100 text-base sm:text-lg font-semibold max-w-xl">
             Platform operations are running smoothly. Here is what requires your administrative attention today.
           </p>
         </div>
@@ -254,7 +254,7 @@ const Dashboard: React.FC = () => {
                   </span>
                 </div>
               ) : (
-                <div className="flex items-center gap-1 pt-4 border-t border-slate-100 mt-2 text-emerald-600 text-xs font-bold">
+                <div className="flex items-center gap-1 pt-4 border-t border-slate-100 mt-2 text-blue-600 text-xs font-bold">
                   <CheckCircleIcon className="h-4 w-4" /> Operations Complete
                 </div>
               )}
@@ -266,7 +266,7 @@ const Dashboard: React.FC = () => {
       {/* Quick Actions Panel */}
       <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-lg">
         <h2 className="text-2.5xl font-black text-slate-800 tracking-tight mb-6 flex items-center gap-2">
-          Quick Actions <SparklesIcon className="h-6 w-6 text-emerald-500 anim-subtle-spin" />
+          Quick Actions <SparklesIcon className="h-6 w-6 text-blue-500 anim-subtle-spin" />
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Link
@@ -288,9 +288,9 @@ const Dashboard: React.FC = () => {
 
           <Link
             to="/doctors"
-            className="flex items-center p-5 bg-gradient-to-br from-emerald-50/40 via-white to-emerald-50/10 border border-emerald-100 rounded-2xl hover:border-emerald-200 hover:shadow-lg transition-all group"
+            className="flex items-center p-5 bg-gradient-to-br from-blue-50/40 via-white to-blue-50/10 border border-blue-100 rounded-2xl hover:border-blue-200 hover:shadow-lg transition-all group"
           >
-            <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl mr-4 shadow-lg shadow-emerald-100 group-hover:scale-110 transition-transform">
+            <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl mr-4 shadow-lg shadow-blue-100 group-hover:scale-110 transition-transform">
               <UserIcon className="h-6 w-6 text-white" />
             </div>
             <div>
@@ -328,7 +328,7 @@ const Dashboard: React.FC = () => {
               onClick={() => setJoinFilter(key as any)}
               className={`flex flex-col items-center p-3 rounded-2xl border-2 transition-all cursor-pointer ${
                 joinFilter === key
-                  ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-inner'
+                  ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-inner'
                   : 'border-transparent ' + color + ' hover:border-slate-200'
               }`}
             >
@@ -341,7 +341,7 @@ const Dashboard: React.FC = () => {
         {/* Dynamic Lists */}
         {joinLoading ? (
           <div className="flex flex-col items-center justify-center h-40 space-y-2">
-            <div className="w-8 h-8 border-3 border-emerald-100 border-t-emerald-500 rounded-full animate-spin"></div>
+            <div className="w-8 h-8 border-3 border-blue-100 border-t-blue-600 rounded-full animate-spin"></div>
             <p className="text-slate-400 text-[10px] font-bold tracking-wider animate-pulse">Retrieving requests...</p>
           </div>
         ) : joinRequests.length === 0 ? (
@@ -363,7 +363,7 @@ const Dashboard: React.FC = () => {
                 <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-blue-400 to-indigo-500" />
 
                 <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow text-white shrink-0">
+                  <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow text-white shrink-0">
                     <UserIcon className="h-5 w-5" />
                   </div>
                   <div className="min-w-0">
@@ -372,7 +372,7 @@ const Dashboard: React.FC = () => {
                         {req.fullName || 'Unknown Practitioner'}
                       </p>
                       {req.role && (
-                        <span className="px-2 py-0.5 bg-indigo-50 text-indigo-700 text-[9px] font-black uppercase rounded border border-indigo-100 shrink-0">
+                        <span className="px-2 py-0.5 bg-blue-50 text-blue-700 text-[9px] font-black uppercase rounded border border-blue-100 shrink-0">
                           {Array.isArray(req.role) ? req.role[0] : req.role}
                         </span>
                       )}

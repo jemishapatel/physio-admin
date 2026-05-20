@@ -2,13 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
-import { 
-  ShieldCheckIcon, 
-  CheckCircleIcon, 
-  ExclamationTriangleIcon, 
-  CheckIcon, 
-  ArrowPathIcon, 
-  ArrowLeftIcon 
+import {
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
+  CheckIcon,
+  ArrowPathIcon,
+  ArrowLeftIcon,
 } from '@heroicons/react/24/outline';
 
 const OTPVerification: React.FC = () => {
@@ -109,7 +108,7 @@ const OTPVerification: React.FC = () => {
     try {
       const response = await api.post('/user/verify-otp', {
         email,
-        otp: otpValue
+        otp: otpValue,
       });
 
       if (response.data.success) {
@@ -139,7 +138,7 @@ const OTPVerification: React.FC = () => {
 
     try {
       const response = await api.post('/user/resend-otp', { email });
-      
+
       if (response.data.success) {
         setSuccess('OTP sent successfully! Check your email.');
         setCountdown(60);
@@ -154,143 +153,170 @@ const OTPVerification: React.FC = () => {
     }
   };
 
+  // Progress indicator: how many digits filled
+  const filled = otp.filter(Boolean).length;
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-          <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
-        </div>
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-red-50">
+
+      {/* Soft background blobs matching logo colors */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl animate-blob" />
+        <div className="absolute top-1/2 -right-40 w-96 h-96 bg-red-200/30 rounded-full blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute -bottom-40 left-1/3 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl animate-blob animation-delay-4000" />
+        {/* Subtle dot grid */}
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: 'radial-gradient(circle, #cbd5e1 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
       </div>
 
-      <div className="max-w-md w-full relative z-10">
-        {/* OTP Card */}
-        <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20 animate-fadeIn">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-block p-5 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 rounded-3xl mb-4 shadow-2xl transform hover:scale-110 transition-transform duration-300">
-              <ShieldCheckIcon className="h-16 w-16 text-white" />
-            </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent mb-2">
-              Verify OTP
-            </h1>
-            <p className="text-gray-600 font-medium text-base">
-              Enter the 6-digit code sent to
-            </p>
-            <p className="text-emerald-600 font-bold text-lg mt-1">{email}</p>
-            <div className="mt-4 h-1 w-20 bg-gradient-to-r from-emerald-500 to-cyan-500 mx-auto rounded-full"></div>
+      <div className="w-full max-w-sm relative z-10 animate-fadeIn">
+
+        {/* Brand mark */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-white shadow-2xl shadow-blue-200/60 mb-5 ring-4 ring-white p-2">
+            <img src="/logo.png" alt="Move Well" className="w-full h-full object-contain" />
           </div>
+          <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">Verify OTP</h1>
+          <p className="text-slate-500 text-sm mt-1">
+            Code sent to{' '}
+            <span className="text-blue-600 font-semibold">{email}</span>
+          </p>
+          {/* Accent line using logo colors */}
+          <div className="mt-3 mx-auto w-16 h-1 rounded-full bg-gradient-to-r from-blue-600 to-red-500" />
+        </div>
+
+        {/* Card */}
+        <div className="bg-white rounded-3xl p-8 shadow-2xl shadow-slate-200/80 border border-slate-100">
 
           {/* Success Message */}
           {success && (
-            <div className="mb-6 p-4 bg-green-50 border-l-4 border-green-500 rounded-xl animate-fadeIn">
-              <div className="flex items-center">
-                <CheckCircleIcon className="h-6 w-6 text-green-500 mr-3" />
-                <p className="text-green-700 text-sm font-medium">{success}</p>
-              </div>
+            <div className="mb-5 flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-2xl animate-fadeIn">
+              <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 shrink-0" />
+              <p className="text-green-700 text-sm font-medium">{success}</p>
             </div>
           )}
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-xl animate-fadeIn">
-              <div className="flex items-center">
-                <ExclamationTriangleIcon className="h-6 w-6 text-red-500 mr-3" />
-                <p className="text-red-700 text-sm font-medium">{error}</p>
-              </div>
+            <div className="mb-5 flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-2xl animate-fadeIn">
+              <ExclamationTriangleIcon className="h-5 w-5 text-red-500 mt-0.5 shrink-0" />
+              <p className="text-red-700 text-sm font-medium">{error}</p>
             </div>
           )}
 
           {/* OTP Form */}
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-7">
+
             {/* OTP Input Boxes */}
-            <div className="flex justify-center gap-3">
-              {otp.map((digit, index) => (
-                <input
-                  key={index}
-                  ref={(el) => (inputRefs.current[index] = el)}
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handleChange(index, e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(index, e)}
-                  onPaste={handlePaste}
-                  className="w-14 h-16 text-center text-2xl font-bold border-3 border-gray-300 rounded-2xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all outline-none bg-white shadow-lg hover:shadow-xl"
-                  autoFocus={index === 0}
+            <div>
+              <div className="flex justify-between gap-2">
+                {otp.map((digit, index) => (
+                  <input
+                    key={index}
+                    ref={(el) => (inputRefs.current[index] = el)}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => handleChange(index, e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(index, e)}
+                    onPaste={handlePaste}
+                    className={`
+                      w-12 h-14 text-center text-xl font-bold rounded-xl border-2 transition-all duration-200 outline-none
+                      text-slate-800 bg-slate-50
+                      ${digit
+                        ? 'border-blue-500 bg-blue-50 shadow-md shadow-blue-100'
+                        : 'border-slate-200 hover:border-slate-300'
+                      }
+                      focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-blue-50
+                    `}
+                    autoFocus={index === 0}
+                  />
+                ))}
+              </div>
+
+              {/* Progress bar */}
+              <div className="mt-4 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-blue-600 to-red-500 rounded-full transition-all duration-300"
+                  style={{ width: `${(filled / 6) * 100}%` }}
                 />
-              ))}
+              </div>
+              <p className="text-right text-xs text-slate-400 mt-1">{filled}/6 digits</p>
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={loading || otp.join('').length !== 6}
-              className="w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white font-bold py-5 px-6 rounded-2xl hover:shadow-2xl focus:ring-4 focus:ring-emerald-200 transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-xl"
+              disabled={loading || filled !== 6}
+              className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 shadow-lg shadow-blue-200 hover:shadow-blue-300 focus:ring-2 focus:ring-blue-300 transition-all duration-200 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
             >
               {loading ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin h-6 w-6 mr-3" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                <>
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
                   Verifying...
-                </span>
+                </>
               ) : (
-                <span className="flex items-center justify-center text-lg">
-                  <CheckIcon className="h-5 w-5 mr-2" />
+                <>
+                  <CheckIcon className="h-4 w-4" />
                   Verify & Continue
-                </span>
+                </>
               )}
             </button>
           </form>
 
+          {/* Divider */}
+          <div className="my-6 border-t border-slate-100" />
+
           {/* Resend OTP */}
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-600 mb-3">
-              Didn't receive the code?
-            </p>
+          <div className="text-center">
+            <p className="text-slate-400 text-xs mb-3">Didn't receive the code?</p>
             {canResend ? (
               <button
                 onClick={handleResendOTP}
                 disabled={resending}
-                className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {resending ? (
                   <>
-                    <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
                     Sending...
                   </>
                 ) : (
                   <>
-                    <ArrowPathIcon className="h-5 w-5 mr-2" />
+                    <ArrowPathIcon className="h-4 w-4" />
                     Resend OTP
                   </>
                 )}
               </button>
             ) : (
-              <p className="text-gray-500 font-medium">
-                Resend OTP in <span className="text-emerald-600 font-bold">{countdown}s</span>
+              <p className="text-slate-400 text-sm">
+                Resend in{' '}
+                <span className="text-blue-600 font-bold tabular-nums">{countdown}s</span>
               </p>
             )}
           </div>
-
-          {/* Back to Login */}
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => navigate('/login')}
-              className="text-gray-600 hover:text-gray-800 font-medium text-sm transition-colors flex items-center justify-center mx-auto"
-            >
-              <ArrowLeftIcon className="h-4 w-4 mr-2" />
-              Back to Login
-            </button>
-          </div>
         </div>
+
+        {/* Back to Login */}
+        <button
+          onClick={() => navigate('/login')}
+          className="mt-5 w-full flex items-center justify-center gap-2 text-slate-400 hover:text-slate-600 text-sm font-medium transition-colors"
+        >
+          <ArrowLeftIcon className="h-4 w-4" />
+          Back to Login
+        </button>
       </div>
 
       <style>{`
@@ -299,28 +325,9 @@ const OTPVerification: React.FC = () => {
           33% { transform: translate(30px, -50px) scale(1.1); }
           66% { transform: translate(-20px, 20px) scale(0.9); }
         }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-in-out;
-        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
       `}</style>
     </div>
   );

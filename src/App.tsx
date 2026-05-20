@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import ClinicApprovals from './pages/ClinicApprovals';
 import DoctorApprovals from './pages/DoctorApprovals';
 import ClinicJoinRequests from './pages/ClinicJoinRequests';
+import OwnerJoinRequests from './pages/OwnerJoinRequests';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import OTPVerification from './pages/OTPVerification';
@@ -36,6 +37,7 @@ function App() {
             <Route path="doctors" element={<DoctorApprovals />} />
             <Route path="join-requests" element={<ClinicJoinRequests />} />
             <Route path="join-requests/:userId" element={<ClinicJoinRequests />} />
+            <Route path="owner-join-requests" element={<OwnerJoinRequests />} />
             <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>

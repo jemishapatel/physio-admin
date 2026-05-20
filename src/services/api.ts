@@ -81,6 +81,9 @@ export const userAPI = {
   getProfile: () =>
     api.get('/user/profile'),
 
+  updateProfile: (data: { fullName?: string; mobileNumber?: string; countryCode?: string; gender?: string }) =>
+    api.put('/user/profile', data),
+
     // GET /api/user/clinic-requests — join requests for the logged-in user (or any userId for admin)
   getClinicJoinRequests: (params?: { userId?: string; status?: string; page?: number; limit?: number }) =>
     api.get('/user/clinic-requests', { params }),

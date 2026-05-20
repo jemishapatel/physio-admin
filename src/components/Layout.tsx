@@ -31,15 +31,22 @@ const Layout: React.FC = () => {
 
   const userRoles = Array.isArray(user?.role) ? user.role : [user?.role || ''];
   const isSuperAdmin = userRoles.includes('super_admin');
+  const isOwner = userRoles.includes('owner');
+  const isDoctor = userRoles.includes('sr_doctor') || userRoles.includes('jr_doctor') || userRoles.includes('practitioner') || userRoles.includes('staff');
 
   const navigation = [
-    { name: 'Dashboard', path: '/', icon: <ChartBarIcon className="w-8 h-8" />, gradient: 'from-blue-500 to-cyan-500' },
+    { name: 'Dashboard', path: '/', icon: <ChartBarIcon className="w-8 h-8" />, gradient: 'from-blue-600 to-blue-700' },
     ...(isSuperAdmin ? [
-      { name: 'Clinic Approvals', path: '/clinics', icon: <BuildingOffice2Icon className="w-8 h-8" />, gradient: 'from-emerald-500 to-teal-500' },
-      { name: 'Doctor Approvals', path: '/doctors', icon: <UserIcon className="w-8 h-8" />, gradient: 'from-purple-500 to-pink-500' },
+      { name: 'Clinic Approvals', path: '/clinics', icon: <BuildingOffice2Icon className="w-8 h-8" />, gradient: 'from-blue-500 to-blue-600' },
+      { name: 'Doctor Approvals', path: '/doctors', icon: <UserIcon className="w-8 h-8" />, gradient: 'from-blue-600 to-blue-700' },
       // { name: 'Join Requests', path: '/join-requests', icon: <LinkIcon className="w-8 h-8" />, gradient: 'from-orange-500 to-amber-500' },
     ] : [
-      { name: 'Join Requests', path: '/join-requests', icon: <LinkIcon className="w-8 h-8" />, gradient: 'from-orange-500 to-amber-500' },
+      ...(isDoctor ? [
+        { name: 'Join Requests', path: '/join-requests', icon: <LinkIcon className="w-8 h-8" />, gradient: 'from-blue-500 to-blue-600' }
+      ] : []),
+      ...(isOwner ? [
+        { name: 'Owner Requests', path: '/owner-join-requests', icon: <BuildingOffice2Icon className="w-8 h-8" />, gradient: 'from-blue-500 to-blue-600' }
+      ] : []),
     ]),
   ];
 
@@ -48,7 +55,7 @@ const Layout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50">
+    <div className="min-h-screen bg-slate-50">
       {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 z-40 h-screen transition-all duration-300 ${sidebarOpen ? 'w-72' : 'w-20'
@@ -62,13 +69,20 @@ const Layout: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center justify-center p-6 border-b border-gray-700">
             <div className="text-center">
-              <div className="inline-block p-3 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-2xl mb-2 shadow-lg">
-                <BuildingOffice2Icon className="w-10 h-10 text-white" />
+              <div className={`flex items-center justify-center ${sidebarOpen ? 'mb-2' : ''}`}>
+                <img
+                  src="/logo.png"
+                  alt="Move Well Logo"
+                  className={`object-contain rounded-2xl ring-2 ring-white/10 shadow-lg transition-all duration-300 ${
+                    sidebarOpen ? 'w-16 h-16' : 'w-10 h-10'
+                  }`}
+                  style={{ background: 'white', padding: '4px' }}
+                />
               </div>
               {sidebarOpen && (
                 <>
                   <h1 className="text-2xl font-bold text-white mt-2">Move Well</h1>
-                  <p className="text-emerald-300 text-sm font-medium">Admin Portal</p>
+                  <p className="text-blue-300 text-sm font-medium">Admin Portal</p>
                 </>
               )}
             </div>
@@ -102,7 +116,7 @@ const Layout: React.FC = () => {
               {sidebarOpen ? (
                 <>
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
                       {user?.fullName?.charAt(0) || 'A'}
                     </div>
                     <div>
@@ -149,7 +163,7 @@ const Layout: React.FC = () => {
                 {/* Avatar button */}
                 <button
                   onClick={() => setDropdownOpen(prev => !prev)}
-                  className="h-10 w-10 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2"
+                  className="h-10 w-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                 >
                   {user?.fullName?.charAt(0) || 'A'}
                 </button>
@@ -160,7 +174,7 @@ const Layout: React.FC = () => {
                     {/* User info header */}
                     <div className="px-4 py-3 bg-gradient-to-r from-slate-800 to-slate-700">
                       <div className="flex items-center gap-3">
-                        <div className="h-9 w-9 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0">
+                        <div className="h-9 w-9 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0">
                           {user?.fullName?.charAt(0) || 'A'}
                         </div>
                         <div className="min-w-0">
@@ -174,7 +188,7 @@ const Layout: React.FC = () => {
                     <div className="py-1">
                       <button
                         onClick={() => { setDropdownOpen(false); navigate('/profile'); }}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                       >
                         <UserIcon className="h-4 w-4 shrink-0" />
                         My Profile
