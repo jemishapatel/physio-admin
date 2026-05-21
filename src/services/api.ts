@@ -93,8 +93,8 @@ export const userAPI = {
   getOwnerJoinRequests: (params?: { status?: string; page?: number; limit?: number }) =>
     api.get('/clinic/join-requests', { params }),
 
-  approveRejectJoinRequest: (userId: string, clinicId: string, action: 'approve' | 'reject', rejectionReason?: string, selectedRole?: string) =>
-    api.put(`/clinic/join-requests/${userId}`, { clinicId, action, rejectionReason, selectedRole }),
+  approveRejectJoinRequest: (userId: string, clinicId: string, action: 'approve' | 'reject', rejectionReason?: string, selectedRoles?: string[]) =>
+    api.put(`/clinic/join-requests/${userId}`, { clinicId, action, rejectionReason, selectedRoles }),
 };
 
 // ─── Dashboard APIs ───────────────────────────────────────────────────────────

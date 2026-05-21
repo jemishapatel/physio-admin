@@ -78,6 +78,7 @@ const OwnerJoinRequests: React.FC = () => {
   const [selectedReq, setSelectedReq] = useState<JoinRequest | null>(null);
   const [modalAction, setModalAction] = useState<'approve' | 'reject' | null>(null);
   const [rejectionReason, setRejectionReason] = useState('');
+  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
   const [actionLoading, setActionLoading] = useState(false);
   const [actionError, setActionError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -86,6 +87,7 @@ const OwnerJoinRequests: React.FC = () => {
     setSelectedReq(req);
     setModalAction(action);
     setRejectionReason('');
+    setSelectedRoles([]);
     setActionError('');
   };
 
@@ -93,6 +95,7 @@ const OwnerJoinRequests: React.FC = () => {
     setSelectedReq(null);
     setModalAction(null);
     setRejectionReason('');
+    setSelectedRoles([]);
     setActionError('');
   };
 
@@ -170,6 +173,10 @@ const OwnerJoinRequests: React.FC = () => {
       setActionError('Please provide a rejection reason');
       return;
     }
+    if (modalAction === 'approve' && selectedRoles.length === 0) {
+      setActionError('Please select at least one role for this practitioner');
+      return;
+    }
     setActionLoading(true);
     setActionError('');
     try {
@@ -177,7 +184,8 @@ const OwnerJoinRequests: React.FC = () => {
         selectedReq.userId,
         selectedReq.clinicId,
         modalAction,
-        modalAction === 'reject' ? rejectionReason : undefined
+        modalAction === 'reject' ? rejectionReason : undefined,
+        modalAction === 'approve' ? selectedRoles : undefined
       );
       setSuccessMsg(
         modalAction === 'approve'
@@ -539,6 +547,44 @@ const OwnerJoinRequests: React.FC = () => {
                   rows={3}
                   placeholder="Provide precise rejection description..."
                 />
+              </div>
+            )}
+
+            {modalAction === 'approve' && (
+              <div className="mb-6 space-y-2">
+                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest">
+                  Assign Role <span className="text-rose-500">*</span>
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: 'sr_doctor', label: 'Sr. Doctor' },
+                    { value: 'jr_doctor', label: 'Jr. Doctor' },
+                    { value: 'doctor', label: 'Doctor' },
+                    { value: 'receptionist', label: 'Receptionist' },
+                    { value: 'driver', label: 'Driver' },
+                    { value: 'patient', label: 'Patient' },
+                  ].map(({ value, label }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setSelectedRoles(prev =>
+                        prev.includes(value) ? prev.filter(r => r !== value) : [...prev, value]
+                      )}
+                      className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border-2 text-xs font-bold transition-all ${
+                        selectedRoles.includes(value)
+                          ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                          : 'border-slate-100 bg-slate-50 text-slate-600 hover:border-slate-200'
+                      }`}
+                    >
+                      <span className={`w-4 h-4 rounded border-2 shrink-0 flex items-center justify-center ${
+                        selectedRoles.includes(value) ? 'border-emerald-500 bg-emerald-500' : 'border-slate-300'
+                      }`}>
+                        {selectedRoles.includes(value) && <CheckIcon className="h-2.5 w-2.5 text-white" />}
+                      </span>
+                      {label}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
 

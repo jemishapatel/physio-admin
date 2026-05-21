@@ -538,49 +538,6 @@ const DoctorApprovals: React.FC = () => {
               </div>
             )}
 
-            {/* Role selection — only shown when approving */}
-            {modalAction === 'approve' && (
-              <div className="mb-6">
-                <label className="block text-sm font-semibold text-gray-700 mb-3">
-                  Assign Roles <span className="text-gray-400 font-normal">(select all that apply)</span>
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { value: 'owner', label: 'Clinic Owner', color: 'amber' },
-                    { value: 'sr_doctor', label: 'Senior Doctor', color: 'purple' },
-                    { value: 'jr_doctor', label: 'Junior Doctor', color: 'blue' },
-                    { value: 'receptionist', label: 'Receptionist', color: 'teal' },
-                    { value: 'driver', label: 'Driver', color: 'gray' },
-                    { value: 'patient', label: 'Patient', color: 'green' },
-                  ].map(({ value, label, color }) => {
-                    const checked = selectedRoles.includes(value);
-                    return (
-                      <button
-                        key={value}
-                        type="button"
-                        onClick={() => toggleRole(value)}
-                        className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border-2 text-sm font-semibold transition-all ${
-                          checked
-                            ? 'border-blue-500 bg-blue-50 text-blue-700'
-                            : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
-                        }`}
-                      >
-                        <span className={`w-4 h-4 rounded flex items-center justify-center shrink-0 ${
-                          checked ? 'bg-blue-600' : 'border-2 border-gray-300'
-                        }`}>
-                          {checked && <CheckIcon className="h-3 w-3 text-white" />}
-                        </span>
-                        {label}
-                      </button>
-                    );
-                  })}
-                </div>
-                {selectedRoles.length === 0 && (
-                  <p className="text-xs text-amber-600 mt-2">No role selected — user will keep their existing roles</p>
-                )}
-              </div>
-            )}
-
             {modalAction === 'reject' && (
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
