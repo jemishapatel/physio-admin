@@ -8,6 +8,7 @@ import {
   ArrowRightOnRectangleIcon,
   Bars3Icon,
   LinkIcon,
+  ArrowPathIcon,
 } from '@heroicons/react/24/outline';
 
 const Layout: React.FC = () => {
@@ -38,6 +39,7 @@ const Layout: React.FC = () => {
     { name: 'Dashboard', path: '/', icon: <ChartBarIcon className="w-8 h-8" />, gradient: 'from-blue-600 to-blue-700' },
     ...(isSuperAdmin ? [
       { name: 'Clinic Approvals', path: '/clinics', icon: <BuildingOffice2Icon className="w-8 h-8" />, gradient: 'from-blue-500 to-blue-600' },
+      { name: 'Clinic Updates', path: '/clinic-updates', icon: <ArrowPathIcon className="w-8 h-8" />, gradient: 'from-teal-500 to-teal-600' },
       { name: 'Doctor Approvals', path: '/doctors', icon: <UserIcon className="w-8 h-8" />, gradient: 'from-blue-600 to-blue-700' },
       // { name: 'Join Requests', path: '/join-requests', icon: <LinkIcon className="w-8 h-8" />, gradient: 'from-orange-500 to-amber-500' },
     ] : [

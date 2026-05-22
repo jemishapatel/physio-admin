@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import ClinicApprovals from './pages/ClinicApprovals';
+import ClinicUpdateApprovals from './pages/ClinicUpdateApprovals';
 import DoctorApprovals from './pages/DoctorApprovals';
 import ClinicJoinRequests from './pages/ClinicJoinRequests';
 import OwnerJoinRequests from './pages/OwnerJoinRequests';
@@ -34,6 +35,7 @@ function App() {
           >
             <Route index element={<Dashboard />} />
             <Route path="clinics" element={<ClinicApprovals />} />
+            <Route path="clinic-updates" element={<ClinicUpdateApprovals />} />
             <Route path="doctors" element={<DoctorApprovals />} />
             <Route path="join-requests" element={<ClinicJoinRequests />} />
             <Route path="join-requests/:userId" element={<ClinicJoinRequests />} />

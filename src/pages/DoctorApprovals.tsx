@@ -445,7 +445,7 @@ const DoctorApprovals: React.FC = () => {
                                     <CheckIcon className="h-4 w-4" />
                                   </button>
                                   <button
-                                    onClick={() => d.isApproved !== false && handleDegreeApproval(userId, d.degreeId, false)}
+                                    onClick={() => handleDegreeApproval(userId, d.degreeId, false)}
                                     title="Reject Degree"
                                     type="button"
                                     className={`p-2 border rounded-xl transition-all shadow-sm ${

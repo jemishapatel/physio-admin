@@ -51,6 +51,15 @@ export const clinicAPI = {
 
   getClinicById: (clinicId: string) =>
     api.get(`/clinic/${clinicId}`),
+
+  getPendingClinicUpdates: (params?: { page?: number; limit?: number }) =>
+    api.get('/clinic/updates/pending', { params }),
+
+  approveClinicUpdate: (requestId: string) =>
+    api.put(`/clinic/updates/${requestId}/approve`),
+
+  rejectClinicUpdate: (requestId: string, rejectionReason: string) =>
+    api.put(`/clinic/updates/${requestId}/reject`, { rejectionReason }),
 };
 
 // ─── User / Doctor Approval APIs ─────────────────────────────────────────────
