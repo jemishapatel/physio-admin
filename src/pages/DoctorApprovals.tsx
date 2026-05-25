@@ -229,15 +229,24 @@ const DoctorApprovals: React.FC = () => {
     );
   };
 
-  const getRoleBadges = (roles: string[] | null | undefined) =>
-    (roles || []).map((r) => (
-      <span
-        key={r}
-        className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${ROLE_COLORS[r] || 'bg-gray-100 text-gray-700'}`}
-      >
-        {ROLE_LABELS[r] || r}
-      </span>
-    ));
+const getRoleBadges = (roles: string | string[] | null | undefined) => {
+  const roleArray = Array.isArray(roles)
+    ? roles
+    : roles
+    ? [roles]
+    : [];
+
+  return roleArray.map((r) => (
+    <span
+      key={r}
+      className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
+        ROLE_COLORS[r] || 'bg-gray-100 text-gray-700'
+      }`}
+    >
+      {ROLE_LABELS[r] || r}
+    </span>
+  ));
+};
 
   const filterTabs: { key: FilterRole; label: string }[] = [
     { key: 'all', label: 'All' },
