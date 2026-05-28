@@ -264,7 +264,12 @@ const Profile: React.FC = () => {
     setError('');
     try {
       const response = await userAPI.getProfile();
-      setProfile(response.data.data);
+      const data = response.data.data;
+      // Normalize role to always be an array
+      if (data && !Array.isArray(data.role)) {
+        data.role = data.role ? [data.role] : [];
+      }
+      setProfile(data);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to load profile');
     } finally {
@@ -323,7 +328,12 @@ const Profile: React.FC = () => {
         gender: editForm.gender.trim(),
       });
       const res = await userAPI.getProfile();
-      setProfile(res.data.data);
+      const data = res.data.data;
+      // Normalize role to always be an array
+      if (data && !Array.isArray(data.role)) {
+        data.role = data.role ? [data.role] : [];
+      }
+      setProfile(data);
       setEditModalOpen(false);
     } catch (err: any) {
       setEditError(err.response?.data?.message || 'Could not save profile changes');
