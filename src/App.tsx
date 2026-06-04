@@ -21,7 +21,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/admin">
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/verify-otp" element={<OTPVerification />} />

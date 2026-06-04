@@ -73,7 +73,7 @@ const Layout: React.FC = () => {
             <div className="text-center">
               <div className={`flex items-center justify-center ${sidebarOpen ? 'mb-2' : ''}`}>
                 <img
-                  src="/logo.png"
+                  src={`${process.env.PUBLIC_URL}/logo.png`}
                   alt="Move Well Logo"
                   className={`object-contain rounded-2xl ring-2 ring-white/10 shadow-lg transition-all duration-300 ${
                     sidebarOpen ? 'w-16 h-16' : 'w-10 h-10'

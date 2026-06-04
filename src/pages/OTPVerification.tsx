@@ -179,7 +179,7 @@ const OTPVerification: React.FC = () => {
         {/* Brand mark */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-white shadow-2xl shadow-blue-200/60 mb-5 ring-4 ring-white p-2">
-            <img src="/logo.png" alt="Move Well" className="w-full h-full object-contain" />
+            <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Move Well" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">Verify OTP</h1>
           <p className="text-slate-500 text-sm mt-1">
